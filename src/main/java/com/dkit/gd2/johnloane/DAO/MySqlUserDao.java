@@ -98,7 +98,7 @@ public class MySqlUserDao extends MySqlDao implements UserDaoInterface
                 int userId = rs.getInt("id");
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
-                String userName = rs.getString("user_name");
+                String userName = rs.getString("username");
                 String password = rs.getString("password");
                 u = new User(userId, firstName, lastName, userName, password);
             }

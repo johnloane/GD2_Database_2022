@@ -27,12 +27,33 @@ public class App
             }
 
             printAllUsers(users);
+
+            User user = IUserDAO.findUserByUsernamePassword("leanne", "password");
+            checkUserFound(user);
+
+            user = IUserDAO.findUserByUsernamePassword("sean", "password");
+            checkUserFound(user);
+
+
+
         }
         catch(DaoException de)
         {
             System.out.println(de.getMessage());
         }
 
+    }
+
+    private static void checkUserFound(User user)
+    {
+        if(user != null)
+        {
+            System.out.println("User found: " + user);
+        }
+        else
+        {
+            System.out.println("No user with that username and password found");
+        }
     }
 
     private static void printAllUsers(List<User> users)
