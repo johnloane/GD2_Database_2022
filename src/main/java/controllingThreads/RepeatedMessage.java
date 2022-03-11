@@ -41,4 +41,22 @@ public class RepeatedMessage implements Runnable
             return;
         }
     }
+
+    private synchronized void  displayMessage(RepeatedMessage repeatedMessage) throws InterruptedException
+    {
+        for (int i = 0; i < repeatedMessage.message.length(); i++)
+        {
+            System.out.print(repeatedMessage.message.charAt(i));
+            Thread.currentThread().sleep(50);
+        }
+
+        System.out.println();
+    }
+
+    /* A method to stop the thread */
+    public void finish()
+    {
+        stopFlag = true;
+        return;
+    }
 }
