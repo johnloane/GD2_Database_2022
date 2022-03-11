@@ -2,6 +2,7 @@ package bankaccount;
 
 public class Account
 {
+    private static Object sharedLock = new Object();
     private double balance;
 
     public Account()
@@ -14,36 +15,41 @@ public class Account
         this.balance = balance;
     }
 
-    public synchronized void deposit(double amount)
+    public void deposit(double amount)
     {
-        double temp;
-        temp = this.balance;
+        synchronized (sharedLock)
+        {
+            double temp;
+            temp = this.balance;
 
-        try
-        {
-            Thread.sleep(500);
+            try
+            {
+                Thread.sleep(500);
+            } catch (InterruptedException ie)
+            {
+                System.out.println(ie.getMessage());
+            }
+            System.out.println(Thread.currentThread().getName() + " depositing current balance is " + temp);
+            temp += amount;
+            balance = temp;
         }
-        catch(InterruptedException ie)
-        {
-            System.out.println(ie.getMessage());
-        }
-        System.out.println(Thread.currentThread().getName() + " depositing current balance is " + temp);
-        temp += amount;
-        balance = temp;
     }
 
     public void withdraw(double amount)
     {
-        try
+        synchronized (sharedLock)
         {
-            Thread.sleep(500);
+            try
+            {
+                Thread.sleep(500);
+            }
+            catch (InterruptedException ie)
+            {
+                System.out.println(ie.getMessage());
+            }
+            System.out.println(Thread.currentThread().getName() + " withdrawing current balance is " + balance);
+            balance -= amount;
         }
-        catch(InterruptedException ie)
-        {
-            System.out.println(ie.getMessage());
-        }
-
-        balance -= amount;
     }
 
     public double getBalance()

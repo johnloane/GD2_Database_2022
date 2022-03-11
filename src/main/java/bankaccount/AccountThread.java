@@ -15,7 +15,11 @@ public class AccountThread implements Runnable
         //Increase the amount in the account by 100 ten times
         for(int i=0; i < 10; i++)
         {
-            this.acc.deposit(100);
+            this.acc.deposit(500);
+        }
+        for(int i=0; i < 10; i++)
+        {
+            this.acc.withdraw(200);
         }
     }
 }

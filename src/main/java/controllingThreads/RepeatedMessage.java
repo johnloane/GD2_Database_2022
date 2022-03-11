@@ -42,14 +42,17 @@ public class RepeatedMessage implements Runnable
         }
     }
 
-    private synchronized void  displayMessage(RepeatedMessage repeatedMessage) throws InterruptedException
+    //Synchronizing this method does not solve the problem here as we are using two separate instances of the RepeatedMessage class and synchronized with lock on the current instance so there will be two separate locks each ignored by the other - need the static sharedLock where there is one sharedLock for all instances of the class to solve this problem
+    private void displayMessage(RepeatedMessage repeatedMessage) throws InterruptedException
     {
-        for (int i = 0; i < repeatedMessage.message.length(); i++)
+        synchronized (sharedLock)
         {
-            System.out.print(repeatedMessage.message.charAt(i));
-            Thread.currentThread().sleep(50);
+            for (int i = 0; i < repeatedMessage.message.length(); i++)
+            {
+                System.out.print(repeatedMessage.message.charAt(i));
+                Thread.currentThread().sleep(50);
+            }
         }
-
         System.out.println();
     }
 
