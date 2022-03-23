@@ -1,12 +1,12 @@
 package controllingThreads;
 
 /* A class to demonstrate why synchronized methods are needed
-by showing what can gappen when they are not synchronized
+by showing what can happen when they are not synchronized
  */
 
 public class RepeatedMessage implements Runnable
 {
-    private static Object sharedLock = new Object();
+    //private static Object sharedLock = new Object();
 
     private String message;
     private int pauseTime;
@@ -42,10 +42,10 @@ public class RepeatedMessage implements Runnable
         }
     }
 
-    //Synchronizing this method does not solve the problem here as we are using two separate instances of the RepeatedMessage class and synchronized with lock on the current instance so there will be two separate locks each ignored by the other - need the static sharedLock where there is one sharedLock for all instances of the class to solve this problem
-    private void displayMessage(RepeatedMessage repeatedMessage) throws InterruptedException
+    //Synchronizing this method does not solve the problem here as we are using two separate instances of the RepeatedMessage class and synchronized will lock on the current instance so there will be two separate locks each ignored by the other - need the static sharedLock where there is one sharedLock for all instances of the class to solve this problem
+    private synchronized static void displayMessage(RepeatedMessage repeatedMessage) throws InterruptedException
     {
-        synchronized (sharedLock)
+        //synchronized (sharedLock)
         {
             for (int i = 0; i < repeatedMessage.message.length(); i++)
             {
